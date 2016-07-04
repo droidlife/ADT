@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 
 
 class IMDB:
-    def __init__(self, title):
-        self.title = title
+    def __init__(self):
+        self.title = None
 
         self.base_url = 'http://www.imdb.com'
         self.search_url = '/find?q='
@@ -70,7 +70,8 @@ class IMDB:
         connection.close()
         return seasons[0].get_text()
 
-    def get_latest_episode(self):
+    def get_latest_episode(self,title):
+        self.title = title
         link = self.search_title()
         episode_link = self.parse_link_to_episodes_link(link=link)
         self.get_episode_details(url=episode_link)
@@ -78,5 +79,3 @@ class IMDB:
         return self.title_header, self.season, self.age
 
 
-i = IMDB(title='one piece')
-i.get_latest_episode()
