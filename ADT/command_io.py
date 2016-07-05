@@ -36,11 +36,11 @@ class Command:
                     file.close()
                     print '\n' + title_head.upper() + ' has been added.'
                     if age is not None:
-                        print '\n The new episode will air on ' + age
+                        print '\nThe new episode will air on ' + age
                         print '\n' + 'New torrent will be downloaded automatically.'
                     else:
-                        print '\n The new episode air date is not out yet.'
-                        print '\n New torrent will be downloaded when the air date arrives.'
+                        print '\nThe new episode air date is not out yet.'
+                        print '\nNew torrent will be downloaded when the air date arrives.'
 
             else:
                 file = open(os.path.expanduser(self.file_path), 'a')
@@ -50,11 +50,11 @@ class Command:
                 file.close()
                 print '\n' + title_head.upper() + ' has been added.'
                 if age is not None:
-                    print '\n The new episode will air on ' + age
+                    print '\nThe new episode will air on ' + age
                     print '\n' + 'New torrent will be downloaded automatically.'
                 else:
-                    print '\n The new episode air date is not out yet.'
-                    print '\n New torrent will be downloaded when the air date arrives.'
+                    print '\nThe new episode air date is not out yet.'
+                    print '\nNew torrent will be downloaded when the air date arrives.'
 
             self.search_query()
 
@@ -74,9 +74,16 @@ class Command:
                 print 'Removed ' + title_head.upper()
 
             else:
-                print '\n You are not following ' + title_head.upper()
-                print '\n Use the commnad ADD <title> to start following'
+                print '\nYou are not following ' + title_head.upper()
+                print '\nUse the commnad ADD <title> to start following'
 
+            self.search_query()
+
+        elif re.match(r'info\b',query,flags=re.IGNORECASE):
+            pass
+
+        else:
+            print '\nCommnd not found. Please enter  valid command.'
             self.search_query()
 
     def search(self):
