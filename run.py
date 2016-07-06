@@ -1,5 +1,5 @@
 import pip
-from ADT import command_io
+from ADT import command
 try:
     from bs4 import BeautifulSoup
 except ImportError:
@@ -21,4 +21,4 @@ except ImportError:
     pip.main(['install', 'evdev'])
 
 if __name__ == '__main__':
-    command_io.Command().search()
+    command.Command().search()

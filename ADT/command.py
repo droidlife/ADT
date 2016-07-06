@@ -79,12 +79,30 @@ class Command:
 
             self.search_query()
 
-        elif re.match(r'info\b',query,flags=re.IGNORECASE):
-            pass
+        elif re.match(r'info\b', query, flags=re.IGNORECASE):
+            i = IMDB()
+            title_head = query[5:].strip()
+            title, season, age = i.get_latest_episode(title=title_head)
 
-        else:
-            print '\nCommnd not found. Please enter  valid command.'
+            print '\nCurrent Episode Details'
+            if age is None:
+                print '\n Information not available yet'
+            else:
+                print '\n Title : ' + str(title).upper()
+                print '\n Episode : ' + str(season).upper()
+                print '\n Air Date : ' + age
+
+            season, age = i.get_next_episode(title=title_head)
+            print '\nNext Episode details : '
+            if age is None:
+                print '\n Information not available yet'
+            else:
+                print '\n Episode : ' + str(season).upper()
+                print '\n Air Date : ' + age
+
             self.search_query()
+        else:
+            pass
 
     def search(self):
         self._get_file_path()
