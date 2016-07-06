@@ -10,6 +10,7 @@ class Command:
         query = raw_input('\nEnter the torrent to be searched : \t').strip().lower()
 
         if re.match(r'quit\b', query, flags=re.IGNORECASE):
+            print '\nGoodbye...'
             sys.exit(0)
 
         elif re.match(r'search\b', query, flags=re.IGNORECASE):
@@ -99,6 +100,20 @@ class Command:
             else:
                 print '\n Episode : ' + str(season).upper()
                 print '\n Air Date : ' + age
+
+            self.search_query()
+
+        elif re.match(r'print\b', query, flags=re.IGNORECASE):
+            if os.path.isfile(os.path.expanduser(self.file_path)):
+                file = open(os.path.expanduser(self.file_path), 'r')
+                lines = file.readlines()
+                file.close()
+                for line in lines:
+                    title = str(line).split('/')[0].strip()
+                    print title
+            else:
+                print '\nYou are not following anything'
+                print '\nUse the commnad ADD <title> to start following'
 
             self.search_query()
         else:
