@@ -14,6 +14,11 @@ class IMDB:
         self.title_header = None
         self.season = None
 
+        self.month = {
+            'Jul': 'july',
+            'Sept': 'september'
+        }
+
     def search_title(self):
         search_title = str(self.title).replace(' ', '+')
         url = self.base_url + self.search_url + search_title
@@ -91,6 +96,14 @@ class IMDB:
         if next_episode[1].find('b', {'class': 'color-green'}):
             details = next_episode[1].find('b', {'class': 'color-green'})
             date = next_episode[1].find('b', {'class': 'episode_datetime_convert'})
-            return details.get_text(), date.get_text()
+            date = self._parse_date(date=date.get_text())
+            return details.get_text(), date
         else:
-            return None,None
+            return None, None
+
+    def _parse_date(self, date):
+        date = str(date)[:-5].strip()
+        date_month = str(date).split(' ')[1].strip()
+
+        date = date.replace(date_month, self.month[date_month])
+        return date

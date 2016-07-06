@@ -116,6 +116,9 @@ class Command:
                 print '\nUse the commnad ADD <title> to start following'
 
             self.search_query()
+
+        elif re.match(r'top\b', query, flags=re.IGNORECASE):
+            pass
         else:
             pass
 

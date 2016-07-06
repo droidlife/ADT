@@ -1,5 +1,5 @@
 import pip
-from ADT import command
+from ADT import command,automate
 try:
     from bs4 import BeautifulSoup
 except ImportError:
@@ -21,4 +21,6 @@ except ImportError:
     pip.main(['install', 'evdev'])
 
 if __name__ == '__main__':
-    command.Command().search()
+    print 'Initializing script...'
+    automate.Automate().begin()
+    # command.Command().search()
