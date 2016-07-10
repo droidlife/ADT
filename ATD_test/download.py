@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 class Download_Torrent:
 
 
-    def download_torrent_kat(self,url):
+    def download_torrent(self,url):
         print 'Opening torrent...'
         if os.name == 'nt':
             os.startfile(url)
@@ -81,7 +81,7 @@ class Download_Torrent:
 
             else:
                 print('Downloading...  >> ' + title[int(torrent - 1)] + '.torrent')
-                download_torrent_kat(href[int(torrent) - 1])
+                download_torrent(href[int(torrent) - 1])
 
                 print 'Arigato....'
 
