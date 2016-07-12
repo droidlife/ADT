@@ -1,17 +1,26 @@
-import requests
 from bs4 import BeautifulSoup
 import re
+import os, sys, re, requests, subprocess, tabulate
 
 
-class IMDB:
+class IMDB():
     def __init__(self):
         self.title = None
 
         self.base_url = 'http://www.imdb.com'
 
-    def top_items(self, type):
+    def connection(self, url):
 
-        print 'ss'
+        try:
+            connection = requests.get(url)
+        except requests.RequestException as e:
+            print (e)
+            raise SystemExit('\n' + str(e))
+
+        soup = BeautifulSoup(connection.content, 'html5lib')
+        return soup
+
+    def top_items(self, type):
 
         if type is "movie":
 
@@ -19,19 +28,12 @@ class IMDB:
             url = self.base_url + extended_url
             print url
 
-            try:
-                connection = requests.get(url)
-            except requests.RequestException as e:
-                print (e)
-                raise SystemExit('\n' + str(e))
-
-            soup = BeautifulSoup(connection.content, 'html5lib')
-            print url
+            soup = self.connection(url)
 
             top_movies = [search.get_text() for search in soup.find_all('td', {'class': 'titleColumn'})]
 
             imdb_rating = [search.get_text() for search in soup.find_all('td', {'class': 'ratingColumn imdbRating'})]
-            print imdb_rating
+
             k = 0
             for i in imdb_rating:
                 imdb_rating[k] = i.strip()
@@ -43,8 +45,10 @@ class IMDB:
                 i = i.splitlines()
                 top_movies[k] = i[1]
                 top_movies[k] = top_movies[k].strip()
-
                 k = k + 1
+            top = top_movies
+            imdb = imdb_rating
+
 
 
 
@@ -54,14 +58,7 @@ class IMDB:
             url = self.base_url + extended_url
             print url
 
-            try:
-                connection = requests.get(url)
-            except requests.RequestException as e:
-                print (e)
-                raise SystemExit('\n' + str(e))
-
-            soup = BeautifulSoup(connection.content, 'html5lib')
-            print url
+            soup = self.connection(url)
             top_animes = [search.get_text() for search in soup.find_all('div', {'class': 'list detail'})]
             print top_animes
 
@@ -73,13 +70,7 @@ class IMDB:
             url = self.base_url + extended_url
             print url
 
-            try:
-                connection = requests.get(url)
-            except requests.RequestException as e:
-                print (e)
-                raise SystemExit('\n' + str(e))
-
-            soup = BeautifulSoup(connection.content, 'html5lib')
+            soup = self.connection(url)
             print url
 
             top_shows = [search.get_text() for search in soup.find_all('td', {'class': 'titleColumn'})]
@@ -89,7 +80,7 @@ class IMDB:
             k = 0
             for i in imdb_rating:
                 imdb_rating[k] = i.strip()
-                print imdb_rating[k]
+
                 k = k + 1
             k = 0
             for i in top_shows:
@@ -98,11 +89,18 @@ class IMDB:
                 i = i.splitlines()
                 top_shows[k] = i[1]
                 top_shows[k] = top_shows[k].strip()
-                print top_shows[k]
+                print top_shows[k], imdb_rating[k]
                 k = k + 1
+            top = top_shows
+            imdb = imdb_rating
         else:
             extended_url = ""
 
+        table = [[
+                     str(index + 1), top[index], imdb[index]
+                 ] for index in range(len(top))]
+        print('\n')
+        print(tabulate.tabulate(table, headers=['No', 'Title', 'Rating']))
 
 
 if __name__ == '__main__':
