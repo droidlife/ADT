@@ -23,4 +23,4 @@ except ImportError:
 if __name__ == '__main__':
     print 'Initializing script...'
     automate.Automate().begin()
-    # command.Command().search()
+    command.Command().search()
