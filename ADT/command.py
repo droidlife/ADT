@@ -21,7 +21,8 @@ class Command:
                 Download_Torrent().search_begins_kat(name=title_head, boolean=True)
                 self.search_query()
             except:
-                print '\nTorrent errror'
+                print '\nSorry torrent can not be downloaded.\nPlease Try again'
+                self.search_query()
 
         elif re.match(r'add\b', query, flags=re.IGNORECASE):
             title_head = query[4:].strip()
@@ -128,14 +129,17 @@ class Command:
         elif re.match(r'top\b', query, flags=re.IGNORECASE):
             print '\nFetching data...'
             title_head = query[4:].strip()
-            IMDB_TOP().top_items(type=title_head)
+            result = IMDB_TOP().top_items(type=title_head)
+            if not result:
+                print '\nSorry the following keyword is not present.\nPlease try again'
             self.search_query()
         else:
             try:
                 Download_Torrent().search_begins_kat(name=query, boolean=True)
                 self.search_query()
             except:
-                print '\nTorrent errror'
+                print '\nSorry torrent can not be downloaded.\nPlease Try again'
+                self.search_query()
 
     def search(self):
         self._get_file_path()

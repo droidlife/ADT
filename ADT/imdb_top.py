@@ -21,7 +21,7 @@ class IMDB_TOP():
         return soup
 
     def top_items(self, type):
-
+        print type
         if type is "movie" or 'movies':
 
             extended_url = "/chart/top"

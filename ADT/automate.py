@@ -1,5 +1,6 @@
 import threading, os, sys
 from datetime import datetime
+from download import Download_Torrent
 
 
 # TODO: to kill the thread on exit
@@ -17,6 +18,7 @@ class Automate:
 
             for line in lines:
                 age = str(line).split('/')
+                print age[0]
                 if '\n' not in age:
                     air_date = age[2].strip()
                     if air_date is not None:
@@ -24,8 +26,10 @@ class Automate:
                         date = datetime.now()
                         days = str(date_object - date).split(':')[0]
                         if int(days) < 0:
-                            print 'torrent ready for downloading'
-
+                            try:
+                                Download_Torrent().search_begins_kat(name=age[0], boolean=True)
+                            except:
+                                print '\nTorrent errror'
         threading.Timer(86400, self.begin).start()
 
     def _get_file_path(self):
