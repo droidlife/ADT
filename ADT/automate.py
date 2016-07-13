@@ -1,10 +1,8 @@
 import threading, os, sys
 from datetime import datetime
 
-def it():
-    threading.Timer(5.0, it).start()
-    print 'hello'
 
+# TODO: to kill the thread on exit
 
 class Automate:
     def __init__(self):
@@ -24,9 +22,11 @@ class Automate:
                     if air_date is not None:
                         date_object = datetime.strptime(air_date, '%d %B %Y')
                         date = datetime.now()
-                        days =  str(date_object-date).split(' ')[0]
+                        days = str(date_object - date).split(' ')[0]
                         if int(days) < 0:
                             print 'torrent ready for downloading'
+
+        threading.Timer(86400, self.begin).start()
 
     def _get_file_path(self):
         if os.name == 'nt':
