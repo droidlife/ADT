@@ -84,7 +84,8 @@ class Download_Torrent():
                 torrent = 1
             else:
                 print(
-                '\nSelect torrent: [ 1 - ' + str(len(href)) + ' ] or [ M ] to go back to main menu or [ Q ] to quit')
+                    '\nSelect torrent: [ 1 - ' + str(
+                        len(href)) + ' ] or [ M ] to go back to main menu or [ Q ] to quit')
 
                 torrent = input('Enter the torrent index : \n')
 
@@ -100,8 +101,6 @@ class Download_Torrent():
                 else:
                     print('Downloading...  >> ' + title[int(torrent - 1)] + '.torrent')
                     self.download_torrent(href[int(torrent) - 1])
-
-                    print 'Arigato....'
 
         else:
 
@@ -171,7 +170,8 @@ class Download_Torrent():
                 torrent = 1
             else:
                 print(
-                '\nSelect torrent: [ 1 - ' + str(len(href)) + ' ] or [ M ] to go back to main menu or [ Q ] to quit')
+                    '\nSelect torrent: [ 1 - ' + str(
+                        len(href)) + ' ] or [ M ] to go back to main menu or [ Q ] to quit')
 
                 torrent = input('Enter the torrent index : \n')
 
@@ -198,12 +198,3 @@ class Download_Torrent():
 
             else:
                 self.download_torrent(href[0])
-
-
-if __name__ == '__main__':
-    try:
-        emp1 = Download_Torrent()
-        emp1.search_begins_kat('sdfg', False)
-    except Exception as e:
-        print (str(e))
-        print ('\n Let me tell you a secret \n I am Batman')

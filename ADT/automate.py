@@ -22,7 +22,7 @@ class Automate:
                     if air_date is not None:
                         date_object = datetime.strptime(air_date, '%d %B %Y')
                         date = datetime.now()
-                        days = str(date_object - date).split(' ')[0]
+                        days = str(date_object - date).split(':')[0]
                         if int(days) < 0:
                             print 'torrent ready for downloading'
 

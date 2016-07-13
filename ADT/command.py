@@ -1,5 +1,7 @@
 import re, os, sys
 from imdb import IMDB
+from download import Download_Torrent
+from imdb_top import IMDB_TOP
 
 
 class Command:
@@ -14,7 +16,12 @@ class Command:
             sys.exit(0)
 
         elif re.match(r'search\b', query, flags=re.IGNORECASE):
-            print 'searching for torrent'
+            title_head = query[7:].strip()
+            try:
+                Download_Torrent().search_begins_kat(name=title_head, boolean=True)
+                self.search_query()
+            except:
+                print '\nTorrent errror'
 
         elif re.match(r'add\b', query, flags=re.IGNORECASE):
             title_head = query[4:].strip()
@@ -81,6 +88,7 @@ class Command:
             self.search_query()
 
         elif re.match(r'info\b', query, flags=re.IGNORECASE):
+            print '\nGetting information...'
             i = IMDB()
             title_head = query[5:].strip()
             title, season, age = i.get_latest_episode(title=title_head)
@@ -118,9 +126,16 @@ class Command:
             self.search_query()
 
         elif re.match(r'top\b', query, flags=re.IGNORECASE):
-            pass
+            print '\nFetching data...'
+            title_head = query[4:].strip()
+            IMDB_TOP().top_items(type=title_head)
+            self.search_query()
         else:
-            pass
+            try:
+                Download_Torrent().search_begins_kat(name=query, boolean=True)
+                self.search_query()
+            except:
+                print '\nTorrent errror'
 
     def search(self):
         self._get_file_path()

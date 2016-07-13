@@ -3,7 +3,7 @@ import re
 import os, sys, re, requests, subprocess, tabulate
 
 
-class IMDB():
+class IMDB_TOP():
     def __init__(self):
         self.title = None
 
@@ -22,11 +22,10 @@ class IMDB():
 
     def top_items(self, type):
 
-        if type is "movie":
+        if type is "movie" or 'movies':
 
             extended_url = "/chart/top"
             url = self.base_url + extended_url
-            print url
 
             soup = self.connection(url)
 
@@ -56,7 +55,6 @@ class IMDB():
         elif type is "anime":
             extended_url = "/list/ls058654847/"
             url = self.base_url + extended_url
-            print url
 
             soup = self.connection(url)
             top_animes = [search.get_text() for search in soup.find_all('div', {'class': 'list detail'})]
@@ -65,13 +63,11 @@ class IMDB():
 
 
 
-        elif type is "shows":
+        elif type is "shows" or 'show':
             extended_url = "/chart/toptv/"
             url = self.base_url + extended_url
-            print url
 
             soup = self.connection(url)
-            print url
 
             top_shows = [search.get_text() for search in soup.find_all('td', {'class': 'titleColumn'})]
 
@@ -98,17 +94,8 @@ class IMDB():
 
         table = [[
                      str(index + 1), top[index], imdb[index]
-                 ] for index in range(len(top))]
+                 ] for index in range(10)]
         print('\n')
         print(tabulate.tabulate(table, headers=['No', 'Title', 'Rating']))
 
-
-if __name__ == '__main__':
-    try:
-        emp1 = IMDB()
-        emp1.top_items(type="movie")
-    # emp1.hashtag()
-    except Exception as e:
-        print (str(e))
-        print ('\n Let me tell you a secret \n I am Batman')
-
+        return True
